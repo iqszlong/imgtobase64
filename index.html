@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Han">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Doc</title>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="style/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+</head>
+
+<body>
+    <div class="wrapper container">
+        <form action="" method="POST"  role="form">
+        
+        	<div class="form-group">
+        		<label class="sr-only" for="">label</label>
+        		<input type="text" class="form-control" id="chinese" placeholder="Input field">
+        	</div>
+        
+        	<div class="form-group">
+        		<span class="file-upload" tabindex="0"><label for="InputFile" class="btn btn-default">upload</label><input type="file" id="InputFile" tab-index="-1"></span>
+        	</div>
+
+            <div class="form-group">
+                <label for="">base64 code</label>
+                <textarea id="output" class="form-control" rows="15"></textarea>   
+            </div>
+
+            <!-- <div class="form-group">
+                <label class="sr-only" for="">select</label>
+                <select class="form-control">
+                    <option value="1">0001</option>
+                    <option value="2">0002</option>
+                    <option value="3">0003</option>
+                    <option value="4">0004</option>
+                    <option value="5">0005</option>
+                    <option value="6">0006</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="sr-only" for="">select</label>
+                <select readonly class="form-control">
+                    <option checked value="1">0001</option>
+                    <option value="2">0002</option>
+                    <option value="3">0003</option>
+                    <option value="4">0004</option>
+                    <option value="5">0005</option>
+                    <option value="6">0006</option>
+                </select>
+            </div> -->
+            <button type="button" class="btn btn-default">button</button>
+        	<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+        </form>
+
+    </div>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		// $('#chinese').keyup(function(){
+    		// 	var value = $(this).val();
+    		// 	var rcjk = /^[\u0391-\uFFE5-·]+$/;
+      //        	var rcjk2 = /^(?!\.)$/;
+
+      //       	console.info(rcjk.test(value) +'------'+ rcjk2.test(value));
+    		// })
+         
+            // $('select[readonly]').mousedown(function(e){
+            //     e.preventDefault();
+            // })
+            
+
+            // $('.wrapper').on('change','input[type=text]',function(){
+            //     console.info(111);
+            // })
+            
+
+            $('.file-upload').each(function(){
+                var output = $(this).children('label');
+                var fileInput = $(this).children('input[type=file]');
+                if(!window.FileReader){
+                    output.text('浏览器不支持 FileReader').addClass('disabled');
+                    fileInput.attr('disabled','disabled');
+                }
+                $(this).on('focus',function(){
+                    fileInput.focus();
+                });
+                fileInput.on('change',function(e){
+                    chageName(e);
+                    if(typeof FileReader != 'undefined'){
+                        readFile(e);
+                    }
+                    e.stopPropagation();
+                }).on('focus',function(){
+                    output.addClass('focus');
+                }).on('blur',function(){
+                    output.removeClass('focus');
+                });
+            })
+            
+            
+
+    		
+
+            function readFile(e){
+                var obj = e.target;
+                var output = $(obj).prev('label');
+                //console.info(e.target);
+                var _file = obj.files[0];
+
+                var _imgRex = /image\/\w+/;
+
+                if(!_imgRex.test(_file.type)){
+                    output.text('请上传图片类型');
+                    return false;
+                }
+
+                var reader = new FileReader();
+                reader.readAsDataURL(_file);
+                reader.onload = function(e){
+                    $('#output').text(this.result);
+                }
+            }
+            function chageName(e){
+                var obj = e.target;
+                var output = $(obj).prev('label');
+                var _name = '';
+                if('files' in obj){
+                    _name = obj.files[0].name;
+                }else{
+                    var _val = obj.value;
+                    _name = _val.substring(_val.lastIndexOf("\\")+1);
+                }
+                
+                // console.info(_name);
+                output.text(_name);
+            }
+    	})
+            
+    </script>
+</body>
+
+</html>

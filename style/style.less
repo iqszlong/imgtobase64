@@ -1,0 +1,52 @@
+@import (reference) 'http://localhost:8887/bootbox/bootstrap-less/variables';
+@import (reference) 'http://localhost:8887/bootbox/bootstrap-less/mixins';
+@import (reference)  "http://localhost:8887/bootbox/bootstrap-less/buttons";
+
+@import (reference)  "http://localhost:8887/bootbox/less/mixin";
+
+
+html,
+body {
+    background: #eee;
+    height: 100%;
+    width: 100%;
+}
+
+html:-moz-full-screen {
+    background: black;
+}
+
+html:-webkit-full-screen {
+    background: black;
+}
+
+// input[type='file']{
+    //	.appearance(button,btn);
+    // position: relative;
+    // &:before{
+    // 	position: absolute;
+    // 	content:attr(value);
+    // 	background:#ccc;
+    // 	.size(100%);
+    // }
+// }
+
+select[readonly]{
+	.appearance(none,select);
+	option:not(:checked){
+		display:none;
+		visibility: hidden;
+	}
+}
+
+.file-upload{
+    display:inline-block;
+    
+    input[type='file']{
+        opacity: 0;
+        height:0;
+        font-size: 0;
+        overflow: hidden;
+        width:100%;
+    }
+}
